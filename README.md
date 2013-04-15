@@ -8,6 +8,8 @@ Create a settings.cfg file and add the following to it:
 
     DEFAULT_USERNAME = 'username'
     DEFAULT_PASSWORD = 'password'
+    SECRET_KEY = 'secret key'
+    DATABASE = '/path/to/database.db'
 
 # Running the server
 
