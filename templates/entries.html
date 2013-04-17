@@ -1,8 +1,22 @@
 {% extends "layout.html" %}
 {% block body %}
-<ul>
-  {% for entry in entries %}
-  <li>{{ entry.temp }} | {{ entry.key }} | {{ entry.created }}</li>
-  {% endfor %}
-</ul>
+<table>
+    <thead>
+        <tr>
+            <td>Temp (C)</td>
+            <td>Key</td>
+            <td>Created</td>
+        </tr>
+    </thead>
+    <tbody>
+      {% for entry in entries %}
+      <tr>
+        <td>{{ entry.temp }}</td>
+        <td>{{ entry.key }}</td>
+        <td>{{ entry.created }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}

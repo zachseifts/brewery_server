@@ -32,7 +32,7 @@ def after_request(response):
 def temps():
     if request.method == 'GET':
         cur = g.db.execute('select created, temp, key from entries order by id desc')
-        entries = [dict(created=row[0], temp=row[1], key=row[2]) for row in cur.fetchall()]
+        entries = [dict(created=row[0], temp=float(row[1] / 1000), key=row[2]) for row in cur.fetchall()]
         return render_template('entries.html', entries=entries)
     if request.method == 'POST':
         auth = request.authorization
