@@ -2,6 +2,7 @@ from __future__ import with_statement
 from contextlib import closing
 import sqlite3
 from flask import Flask, request, jsonify, json, Response, abort, g, render_template
+from werkzeug.contrib.fixers import ProxyFix
 
 app = Flask(__name__)
 app.config.from_envvar('FLASK_SETTINGS', silent=True)
@@ -43,6 +44,8 @@ def temps():
             [data['temp'], data['key']])
         g.db.commit()
         return jsonify(status='ok', temp=data['temp'], key=data['key'])
+
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
