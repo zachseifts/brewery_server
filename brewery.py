@@ -41,17 +41,15 @@ def home():
     entries = [dict(created=row[0], temp=float(row[1] / 1000), key=row[2]) for row in cur.fetchall()]
     return render_template('entries.html', entries=entries)
 
-@app.route('/temp/', methods=['POST'])
-def temps():
+@app.route('/temp/<key>/<int:temp>', methods=['POST'])
+def temps(key, temp):
     if request.method == 'POST':
         auth = request.authorization
         if not auth or (auth.username != app.config['DEFAULT_USERNAME'] or auth.password != app.config['DEFAULT_PASSWORD']):
             abort(401)
-        data = json.loads(request.data)
-        g.db.execute('insert into entries (temp, key) values (?, ?)',
-            [data['temp'], data['key']])
+        g.db.execute('insert into entries (temp, key) values (?, ?)', [temp, key])
         g.db.commit()
-        return jsonify(status='ok', temp=data['temp'], key=data['key'])
+        return jsonify(status='ok', temp=temp, key=key)
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
