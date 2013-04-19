@@ -11,6 +11,10 @@ Create a settings.cfg file and add the following to it:
     SECRET_KEY = 'secret key'
     DATABASE = '/path/to/database.db'
 
+Installing everything
+
+    pip install -r requirements.txt
+
 # Running the server
 
     export FLASK_SETTINGS=./settings.cfg
