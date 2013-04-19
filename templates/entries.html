@@ -21,6 +21,33 @@
 <div class="container">
   <div class="row">
     <div class="span12">
+	<div id="chart"></div>
+    	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+          google.load('visualization', '1.0', {'packages':['corechart']});
+          google.setOnLoadCallback(drawChart);
+
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['created', 'temp (C)'],
+              {% for entry in entries %}
+              ['{{ entry.created }}', {{ entry.temp }}],
+              {% endfor %}
+            ]);
+            var options = {
+	      'height': 400
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('chart'));
+            chart.draw(data, options);
+          }
+        </script>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="span12">
       <table class="table table-striped">
         <thead>
           <tr>
