@@ -40,7 +40,7 @@ def after_request(response):
 def home():
     cur = g.db.execute('select created, ((temp/1000.0) * 1.8) + 32, temp/1000.0, key from entries order by id desc limit 1440')
     entries = [dict(created=row[0], temp=row[1], c=row[2], key=row[3]) for row in cur.fetchall()]
-    return render_template('entries.html',
+    return render_template('homepage.html',
         entries=entries[:60],
         current=entries[0]['temp'], 
         half=reversed(entries[:30]),
