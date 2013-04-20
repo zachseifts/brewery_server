@@ -1,4 +1,9 @@
 {% extends "bootstrap_responsive.html" %}
+
+{% block favicons %}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+{% endblock favicons %}
+
 {% block body_content %}
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
