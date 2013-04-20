@@ -39,7 +39,7 @@ def after_request(response):
 def home():
     cur = g.db.execute('select created, temp, key from entries order by id desc')
     entries = [dict(created=row[0], temp=float(row[1] / 1000), key=row[2]) for row in cur.fetchall()]
-    return render_template('entries.html', entries=entries)
+    return render_template('entries.html', entries=entries, graph=reversed(entries))
 
 @app.route('/temp/<key>/<int:temp>', methods=['POST'])
 def temps(key, temp):

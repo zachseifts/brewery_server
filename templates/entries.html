@@ -30,7 +30,7 @@
           function drawChart() {
             var data = google.visualization.arrayToDataTable([
               ['created', 'temp (C)'],
-              {% for entry in entries %}
+              {% for entry in graph %}
               ['{{ entry.created }}', {{ entry.temp }}],
               {% endfor %}
             ]);
