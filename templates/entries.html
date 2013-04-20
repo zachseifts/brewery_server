@@ -8,12 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand" href="#">brewing.seifts.us</a>
-      <div class="nav-collapse">
-        <ul class="nav">
-          <li class="active"><a href="/">Home</a></li>
-        </ul>
-      </div><!--/.nav-collapse -->
+      <a class="brand" href="#">Temperatures!</a>
     </div>
   </div>
 </div>
@@ -22,7 +17,13 @@
   <div class="row">
     <div class="span6">
       <h1>It's currently {{ current }} (F)</h1>
-      <div id="chart"></div>
+      <hr />
+      <h2>30 minutes</h2>
+      <div id="chart_half"></div>
+      <h2>1 hour</h2>
+      <div id="chart_hour"></div>
+      <h2>24 hours</h2>
+      <div id="chart_day"></div>
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
       <script type="text/javascript">
         google.load('visualization', '1.0', {'packages':['corechart']});
@@ -31,15 +32,35 @@
         function drawChart() {
           var data = google.visualization.arrayToDataTable([
             ['created', 'temp (F)'],
-            {% for entry in graph %}
+            {% for entry in half %}
             ['{{ entry.created }}', {{ entry.temp }}],
             {% endfor %}
           ]);
           var options = {
-	    'title': 'Last 24 hours',
-            'height': 400
           };
-          var chart = new google.visualization.LineChart(document.getElementById('chart'));
+          var chart = new google.visualization.LineChart(document.getElementById('chart_half'));
+          chart.draw(data, options);
+
+          var data = google.visualization.arrayToDataTable([
+            ['created', 'temp (F)'],
+            {% for entry in hour %}
+            ['{{ entry.created }}', {{ entry.temp }}],
+            {% endfor %}
+          ]);
+          var options = {
+          };
+          var chart = new google.visualization.LineChart(document.getElementById('chart_hour'));
+          chart.draw(data, options);
+
+          var data = google.visualization.arrayToDataTable([
+            ['created', 'temp (F)'],
+            {% for entry in day %}
+            ['{{ entry.created }}', {{ entry.temp }}],
+            {% endfor %}
+          ]);
+          var options = {
+          };
+          var chart = new google.visualization.LineChart(document.getElementById('chart_day'));
           chart.draw(data, options);
         }
       </script>
