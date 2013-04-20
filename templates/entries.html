@@ -51,6 +51,7 @@
         <thead>
           <tr>
             <td>Temp (F)</td>
+            <td>Temp (C)</td>
             <td>Key</td>
             <td>Created</td>
           </tr>
@@ -59,6 +60,7 @@
           {% for entry in entries %}
           <tr>
             <td>{{ entry.temp }}</td>
+            <td>{{ entry.c }}</td>
             <td>{{ entry.key }}</td>
             <td>{{ entry.created }}</td>
           </tr>
