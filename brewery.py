@@ -56,8 +56,8 @@ def home():
     return render_template('homepage.html',
         average=reduce(lambda x, y: x + y, temps) / len(temps),
         current=readings[0]['temp'], 
-        hour=readings[:60],
-        half=readings[:30],
+        hour=readings,
+        half=readings,
         day=readings)
 
 @app.route('/favicon.ico')
