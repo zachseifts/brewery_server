@@ -38,8 +38,6 @@
       <div id="chart_half"></div>
       <h2>1 hour</h2>
       <div id="chart_hour"></div>
-      <h2>2 hours</h2>
-      <div id="chart_2hour"></div>
       <h2>24 hours</h2>
       <div id="chart_day"></div>
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -68,17 +66,6 @@
           var options = {
           };
           var chart = new google.visualization.LineChart(document.getElementById('chart_hour'));
-          chart.draw(data, options);
-
-          var data = google.visualization.arrayToDataTable([
-            ['created', 'temp (F)'],
-            {% for entry in two_hours %}
-            ['{{ entry.created }}', {{ entry.temp }}],
-            {% endfor %}
-          ]);
-          var options = {
-          };
-          var chart = new google.visualization.LineChart(document.getElementById('chart_2hour'));
           chart.draw(data, options);
 
           var data = google.visualization.arrayToDataTable([
