@@ -57,7 +57,7 @@
         function drawChart() {
           var data = google.visualization.arrayToDataTable([
             ['created', 'temp (F)'],
-            {% for entry in half %}
+            {% for entry in half | reverse %}
             ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
             {% endfor %}
           ]);
@@ -68,7 +68,7 @@
 
           var data = google.visualization.arrayToDataTable([
             ['created', 'temp (F)'],
-            {% for entry in hour %}
+            {% for entry in hour | reverse %}
             ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
             {% endfor %}
           ]);
@@ -79,7 +79,7 @@
 
           var data = google.visualization.arrayToDataTable([
             ['created', 'temp (F)'],
-            {% for entry in hour_3 %}
+            {% for entry in hour_3 | reverse %}
             ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
             {% endfor %}
           ]);
@@ -90,7 +90,7 @@
 
           var data = google.visualization.arrayToDataTable([
             ['created', 'temp (F)'],
-            {% for entry in objects %}
+            {% for entry in objects | reverse %}
             ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
             {% endfor %}
           ]);

@@ -48,7 +48,7 @@ def reverse_filter(s):
 
 @app.route('/', methods=['GET'])
 def home():
-    objects = [obj for obj in Reading.objects().order_by('-created__date')[:1440]][::-1]
+    objects = [obj for obj in Reading.objects().order_by('created__date')[:1440]][::-1]
     temps = [o.as_fahrenheit() for o in objects]
     return render_template('homepage.html',
         objects=objects,
