@@ -54,6 +54,7 @@ def home():
         objects=objects,
         current=objects[0].as_fahrenheit(),
         hour=objects[:60],
+        hour_3=objects[:60*3],
         half=objects[:30],
         average=sum(temps) / float(len(temps)),
         max_24=max(temps),

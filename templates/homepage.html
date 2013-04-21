@@ -45,6 +45,8 @@
       <div id="chart_half"></div>
       <h2>1 hour</h2>
       <div id="chart_hour"></div>
+      <h2>3 hours</h2>
+      <div id="chart_3hour"></div>
       <h2>24 hours</h2>
       <div id="chart_day"></div>
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -73,6 +75,17 @@
           var options = {
           };
           var chart = new google.visualization.LineChart(document.getElementById('chart_hour'));
+          chart.draw(data, options);
+
+          var data = google.visualization.arrayToDataTable([
+            ['created', 'temp (F)'],
+            {% for entry in hour_3 %}
+            ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
+            {% endfor %}
+          ]);
+          var options = {
+          };
+          var chart = new google.visualization.LineChart(document.getElementById('chart_3hour'));
           chart.draw(data, options);
 
           var data = google.visualization.arrayToDataTable([
