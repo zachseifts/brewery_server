@@ -56,7 +56,7 @@ def home():
     return render_template('homepage.html',
         average=reduce(lambda x, y: x + y, temps) / len(temps),
         current=readings[0]['temp'], 
-        hour=readings,
+        hour=readings[60:],
         half=readings,
         day=readings)
 
