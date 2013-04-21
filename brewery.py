@@ -1,9 +1,11 @@
 from __future__ import with_statement
 import os
 import sqlite3
+import datetime
 from contextlib import closing
 from flask import Flask, request, jsonify, json, Response, abort, g, render_template, send_from_directory
 from flask.ext.bootstrap import Bootstrap
+from flask.ext.mongoengine import MongoEngine
 from werkzeug.contrib.fixers import ProxyFix
 
 app = Flask(__name__)
@@ -13,6 +15,19 @@ app.config.from_envvar('FLASK_SETTINGS', silent=True)
 app.config['BOOTSTRAP_USE_MINIFIED'] = True
 app.config['BOOTSTRAP_USE_CDN'] = True
 app.config['BOOTSTRAP_FONTAWESOME'] = True
+
+app.config['MONGODB_SETTINGS'] = {'DB': 'brewery_server'}
+
+db = MongoEngine()
+db.init_app(app)
+
+class Reading(db.Document):
+    ''' A record of the reading from the sensor.
+    '''
+    created = db.DateTimeField(default=datetime.datetime.now)
+    key = db.StringField(max_length=60)
+    value = db.IntField()
+
 
 def connect_db():
     ''' Connects to the database.
@@ -60,6 +75,7 @@ def temps(key, temp):
             abort(401)
         g.db.execute('insert into entries (temp, key) values (?, ?)', [temp, key])
         g.db.commit()
+        r = Reading(key=key, value=temp).save()
         return jsonify(status='ok', temp=temp, key=key)
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
