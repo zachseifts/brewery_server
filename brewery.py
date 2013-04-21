@@ -44,17 +44,17 @@ def reverse_filter(s):
 @app.route('/', methods=['GET'])
 def home():
     readings = list()
-    for reading in list(Reading.objects.order_by('created')[:1440]):
+    objects = Reading.objects.order_by('created')[:1440]
+    for reading in list(objects):
         readings.append({
             'created': reading.created,
             'temp': reading.as_fahrenheit(),
             'c': reading.as_celsus(),
             'key': reading.key
         })
-    avg_temp = Reading.objects().limit(1440).average('value') / 1000.00;
-
+    temps = [o.as_fahrenheit() for o in list(objects)]
     return render_template('homepage.html',
-        average=avg_temp,
+        average=reduce(lambda x, y: x + y, temps) / len(temps),
         current=readings[0]['temp'], 
         hour=readings[:60],
         half=readings[:30],
