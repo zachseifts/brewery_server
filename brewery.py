@@ -13,6 +13,8 @@ app.config.from_envvar('FLASK_SETTINGS', silent=True)
 app.config['BOOTSTRAP_USE_MINIFIED'] = True
 app.config['BOOTSTRAP_USE_CDN'] = True
 app.config['BOOTSTRAP_FONTAWESOME'] = True
+app.config['BOOTSTRAP_JQUERY_VERSION'] = '2.0.0'
+app.config['BOOTSTRAP_HTML5_SHIM'] = True
 app.config['MONGODB_SETTINGS'] = {'DB': 'brewery_server'}
 
 Bootstrap(app)
