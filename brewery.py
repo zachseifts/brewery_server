@@ -57,6 +57,7 @@ def home():
         average=reduce(lambda x, y: x + y, temps) / len(temps),
         current=readings[0]['temp'], 
         hour=readings[60:],
+        two_hours=readings[120:],
         half=readings[30:],
         day=readings)
 
