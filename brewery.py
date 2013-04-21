@@ -54,8 +54,6 @@ def home():
     avg_temp = Reading.objects.order_by('created')[:1440].average('value');
     return render_template('homepage.html',
         average=(((avg_temp / 1000.0) * 1.8) + 32),
-        high=Reading.objects.order_by('-value')[0].as_fahrenheit(),
-        low=Reading.objects.order_by('value')[0].as_fahrenheit(),
         current=readings[0]['temp'], 
         hour=readings[:60],
         half=readings[:30],
