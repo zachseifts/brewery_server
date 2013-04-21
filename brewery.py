@@ -57,7 +57,7 @@ def home():
         average=reduce(lambda x, y: x + y, temps) / len(temps),
         current=readings[0]['temp'], 
         hour=readings[60:],
-        half=readings,
+        half=readings[30:],
         day=readings)
 
 @app.route('/favicon.ico')
