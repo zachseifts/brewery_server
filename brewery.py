@@ -54,7 +54,8 @@ def home():
         })
     temps = [o.as_fahrenheit() for o in list(objects)]
     return render_template('homepage.html',
-        average=reduce(lambda x, y: x + y, temps) / len(temps),
+        daily_average=reduce(lambda x, y: x + y, temps) / len(temps),
+        hourly_average=reduce(lambda x, y: x + y, temps[60:]) / len(temps[60:]),
         current=readings[0]['temp'], 
         hour=readings[60:],
         half=readings[30:],
