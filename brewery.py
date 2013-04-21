@@ -61,6 +61,22 @@ def home():
         min_24=min(temps)
     )
 
+@app.route('/sersor/<string:key>/', methods=['GET'])
+def sensor(key):
+    objects = [obj for obj in Reading.objects(key=key).order_by('created__date')[:1440]][::-1]
+    temps = [o.as_fahrenheit() for o in objects]
+    return render_template('sensor.html',
+        sensor=key,
+        objects=objects,
+        current=objects[0].as_fahrenheit(),
+        hour=objects[:60],
+        hour_3=objects[:60*3],
+        half=objects[:30],
+        average=sum(temps) / float(len(temps)),
+        max_24=max(temps),
+        min_24=min(temps)
+    )
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
