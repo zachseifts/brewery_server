@@ -44,7 +44,7 @@ def reverse_filter(s):
 @app.route('/', methods=['GET'])
 def home():
     readings = list()
-    objects = Reading.objects.order_by('created')
+    objects = Reading.objects.order_by('created')[:1440]
     for reading in list(objects):
         readings.append({
             'created': reading.created,
