@@ -32,7 +32,7 @@
       <div id="chart_hour"></div>
       <h2>3 hours</h2>
       <div id="chart_3hour"></div>
-      <h2>24 hours</h2>
+      <h2>All time</h2>
       <div id="chart_day"></div>
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
       <script type="text/javascript">
@@ -88,7 +88,7 @@
     </div>
 
     <div class="span6">
-      <h2>Last hour</h2>
+      <h2>Data</h2>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -99,7 +99,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for entry in half %}
+          {% for entry in objects %}
           <tr>
             <td>{{ entry.as_fahrenheit() }}</td>
             <td>{{ entry.as_celsus() }}</td>

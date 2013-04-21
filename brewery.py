@@ -65,7 +65,7 @@ def home():
 
 @app.route('/sersor/<string:key>/', methods=['GET'])
 def sensor(key):
-    objects = [obj for obj in Reading.objects(key=key).order_by('created__date')[:1440]][::-1]
+    objects = [obj for obj in Reading.objects(key=key).order_by('created__date')][::-1]
     temps = [o.as_fahrenheit() for o in objects]
     return render_template('sensor.html',
         sensor=key,
