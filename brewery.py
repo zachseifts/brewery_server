@@ -51,7 +51,7 @@ def home():
             'c': reading.as_celsus(),
             'key': reading.key
         })
-    avg_temp = Reading.objects.order_by('created')[:1440].average('value');
+    avg_temp = Reading.objects().order_by('created').limit(1440).average('value');
     return render_template('homepage.html',
         average=(((avg_temp / 1000.0) * 1.8) + 32),
         current=readings[0]['temp'], 
