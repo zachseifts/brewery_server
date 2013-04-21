@@ -87,6 +87,18 @@
     </div>
 
     <div class="span6">
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+          Sensors
+          <span class="caret"></span>
+        </a>
+          <ul class="dropdown-menu">
+            {% for sensor in sensors %}
+            <li><a href="{{ url_for('sensor', key=sensor) }}">{{ sensor }}</a></li>
+            {% endfor %}
+          </ul>
+      </div>
+ 
       <h2>Last hour</h2>
       <table class="table table-striped">
         <thead>
