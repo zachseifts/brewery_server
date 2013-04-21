@@ -21,7 +21,26 @@
 <div class="container">
   <div class="row">
     <div class="span6">
-      <h1>It's currently {{ current }} (F)</h1>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Currently</td>
+            <td>{{ current }}</td>
+          </tr>
+          <tr>
+            <td>Hourly average</td>
+            <td>{{ average }}</td>
+          </tr>
+          <tr>
+            <td>High</td>
+            <td>{{ high }}</td>
+          </tr>
+          <tr>
+            <td>Low</td>
+            <td>{{ low }}</td>
+          </tr>
+        </tbody>
+      </table>
       <hr />
       <h2>30 minutes</h2>
       <div id="chart_half"></div>
@@ -83,7 +102,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for entry in entries %}
+          {% for entry in hour | reverse %}
           <tr>
             <td>{{ entry.temp }}</td>
             <td>{{ entry.c }}</td>
