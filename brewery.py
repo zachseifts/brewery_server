@@ -36,6 +36,11 @@ class Reading(db.Document):
         '''
         return (self.as_celsus() * 1.8) + 32
 
+    def timestamp(self):
+        ''' Converts timestamp.
+        '''
+        return self.created.strftime("%I:%M %p").lstrip('0').lower()
+
 
 @app.template_filter('reverse')
 def reverse_filter(s):
@@ -43,23 +48,17 @@ def reverse_filter(s):
 
 @app.route('/', methods=['GET'])
 def home():
-    readings = list()
-    objects = Reading.objects.order_by('created')[:1440]
-    for reading in list(objects):
-        readings.append({
-            'created': reading.created,
-            'temp': reading.as_fahrenheit(),
-            'c': reading.as_celsus(),
-            'key': reading.key
-        })
-    temps = [o.as_fahrenheit() for o in list(objects)]
+    objects = [obj for obj in Reading.objects().order_by('-created__date')[:1440]][::-1]
+    temps = [o.as_fahrenheit() for o in objects]
     return render_template('homepage.html',
-        daily_average=reduce(lambda x, y: x + y, temps) / len(temps),
-        hourly_average=reduce(lambda x, y: x + y, temps[60:]) / len(temps[60:]),
-        current=readings[0]['temp'], 
-        hour=readings[60:],
-        half=readings[30:],
-        day=readings)
+        objects=objects,
+        current=objects[0].as_fahrenheit(),
+        hour=objects[:60],
+        half=objects[:30],
+        average=sum(temps) / float(len(temps)),
+        max_24=max(temps),
+        min_24=min(temps)
+    )
 
 @app.route('/favicon.ico')
 def favicon():

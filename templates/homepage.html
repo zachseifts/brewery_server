@@ -28,16 +28,19 @@
             <td>{{ current }}</td>
           </tr>
           <tr>
-            <td>Daily average</td>
-            <td>{{ daily_average }}</td>
+            <td>24 hours max</td>
+            <td>{{ max_24 }}</td>
           </tr>
           <tr>
-            <td>Hourly average</td>
-            <td>{{ hourly_average }}</td>
+            <td>24 hours min</td>
+            <td>{{ min_24 }}</td>
+          </tr>
+          <tr>
+            <td>Average</td>
+            <td>{{ average }}</td>
           </tr>
         </tbody>
       </table>
-      <hr />
       <h2>30 minutes</h2>
       <div id="chart_half"></div>
       <h2>1 hour</h2>
@@ -53,7 +56,7 @@
           var data = google.visualization.arrayToDataTable([
             ['created', 'temp (F)'],
             {% for entry in half %}
-            ['{{ entry.created }}', {{ entry.temp }}],
+            ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
             {% endfor %}
           ]);
           var options = {
@@ -64,7 +67,7 @@
           var data = google.visualization.arrayToDataTable([
             ['created', 'temp (F)'],
             {% for entry in hour %}
-            ['{{ entry.created }}', {{ entry.temp }}],
+            ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
             {% endfor %}
           ]);
           var options = {
@@ -74,8 +77,8 @@
 
           var data = google.visualization.arrayToDataTable([
             ['created', 'temp (F)'],
-            {% for entry in day %}
-            ['{{ entry.created }}', {{ entry.temp }}],
+            {% for entry in objects %}
+            ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
             {% endfor %}
           ]);
           var options = {
@@ -98,12 +101,12 @@
           </tr>
         </thead>
         <tbody>
-          {% for entry in hour | reverse %}
+          {% for entry in half %}
           <tr>
-            <td>{{ entry.temp }}</td>
-            <td>{{ entry.c }}</td>
+            <td>{{ entry.as_fahrenheit() }}</td>
+            <td>{{ entry.as_celsus() }}</td>
             <td>{{ entry.key }}</td>
-            <td>{{ entry.created }}</td>
+            <td>{{ entry.timestamp() }}</td>
           </tr>
           {% endfor %}
         </tbody>
