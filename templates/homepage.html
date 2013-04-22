@@ -47,7 +47,7 @@
         var data = google.visualization.arrayToDataTable([
           ['created', 'temp (F)'],
           {% for entry in half | reverse %}
-          ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
+          ['{{ entry.timestamp_time() }}', {{ entry.as_fahrenheit() }}],
           {% endfor %}
         ]);
         var options = {
@@ -58,7 +58,7 @@
         var data = google.visualization.arrayToDataTable([
           ['created', 'temp (F)'],
           {% for entry in hour | reverse %}
-          ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
+          ['{{ entry.timestamp_time() }}', {{ entry.as_fahrenheit() }}],
           {% endfor %}
         ]);
         var options = {
@@ -69,7 +69,7 @@
         var data = google.visualization.arrayToDataTable([
           ['created', 'temp (F)'],
           {% for entry in hour_3 | reverse %}
-          ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
+          ['{{ entry.timestamp_time() }}', {{ entry.as_fahrenheit() }}],
           {% endfor %}
         ]);
         var options = {
@@ -80,7 +80,7 @@
         var data = google.visualization.arrayToDataTable([
           ['created', 'temp (F)'],
           {% for entry in day | reverse %}
-          ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
+          ['{{ entry.timestamp_time() }}', {{ entry.as_fahrenheit() }}],
           {% endfor %}
         ]);
         var options = {

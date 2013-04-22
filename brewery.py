@@ -43,6 +43,11 @@ class Reading(db.Document):
         '''
         return self.created.strftime("%m/%d/%Y %l:%M %p").lstrip('0').lower()
 
+    def timestamp_time(self):
+        ''' Converts timestamp.
+        '''
+        return self.created.strftime("%l:%M %p").lower()
+
 
 @app.template_filter('reverse')
 def reverse_filter(s):
