@@ -80,7 +80,7 @@
 
         var data = google.visualization.arrayToDataTable([
           ['created', 'temp (F)'],
-          {% for entry in objects | reverse %}
+          {% for entry in day | reverse %}
           ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
           {% endfor %}
         ]);

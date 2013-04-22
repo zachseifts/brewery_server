@@ -50,14 +50,18 @@ def reverse_filter(s):
 
 @app.route('/', methods=['GET'])
 def home():
-    objects = [obj for obj in Reading.objects().order_by('created__date')[:1440]][::-1]
-    temps = [o.as_fahrenheit() for o in objects]
+    now = datetime.datetime.now()
+    half = [obj for obj in Reading.objects(created__gte=now - datetime.timedelta(minutes=30)).order_by('created__date')[:1440]][::-1]
+    hour = [obj for obj in Reading.objects(created__gte=now - datetime.timedelta(hours=1)).order_by('created__date')[:1440]][::-1]
+    hour_3 = [obj for obj in Reading.objects(created__gte=now - datetime.timedelta(hours=3)).order_by('created__date')[:1440]][::-1]
+    day = [obj for obj in Reading.objects(created__gte=now - datetime.timedelta(hours=24)).order_by('created__date')[:1440]][::-1]
+    temps = [o.as_fahrenheit() for o in day]
     return render_template('homepage.html',
-        objects=objects,
-        current=objects[0].as_fahrenheit(),
-        hour=objects[:60],
-        hour_3=objects[:60*3],
-        half=objects[:30],
+        day=day,
+        current=day[0].as_fahrenheit(),
+        hour=hour,
+        hour_3=hour_3,
+        half=half,
         average=sum(temps) / float(len(temps)),
         max_24=max(temps),
         min_24=min(temps),
