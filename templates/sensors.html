@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block body_top %}
+<h1>Sensors</h1>
+{% endblock body_top %}
+
+{% block body_main %}
+<div class="row">
+  <div class="span10">
+    <ul class="">
+      {% for sensor in sensors %}
+      <li><a href="{{ url_for('sensor', key=sensor) }}">{{ sensor }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock body_main %}
+

@@ -1,132 +1,120 @@
 {% extends "layout.html" %}
 
-{% block body_content %}
-{{super()}}
-<div class="container">
-  <div class="row">
-    <div class="span6">
-      <table class="table">
-        <tbody>
-          <tr>
-            <td>Currently</td>
-            <td>{{ current }}</td>
-          </tr>
-          <tr>
-            <td>24 hours max</td>
-            <td>{{ max_24 }}</td>
-          </tr>
-          <tr>
-            <td>24 hours min</td>
-            <td>{{ min_24 }}</td>
-          </tr>
-          <tr>
-            <td>Average</td>
-            <td>{{ average }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <h2>30 minutes</h2>
-      <div id="chart_half"></div>
-      <h2>1 hour</h2>
-      <div id="chart_hour"></div>
-      <h2>3 hours</h2>
-      <div id="chart_3hour"></div>
-      <h2>24 hours</h2>
-      <div id="chart_day"></div>
-      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-      <script type="text/javascript">
-        google.load('visualization', '1.0', {'packages':['corechart']});
-        google.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-          var data = google.visualization.arrayToDataTable([
-            ['created', 'temp (F)'],
-            {% for entry in half | reverse %}
-            ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
-            {% endfor %}
-          ]);
-          var options = {
-          };
-          var chart = new google.visualization.AreaChart(document.getElementById('chart_half'));
-          chart.draw(data, options);
-
-          var data = google.visualization.arrayToDataTable([
-            ['created', 'temp (F)'],
-            {% for entry in hour | reverse %}
-            ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
-            {% endfor %}
-          ]);
-          var options = {
-          };
-          var chart = new google.visualization.AreaChart(document.getElementById('chart_hour'));
-          chart.draw(data, options);
-
-          var data = google.visualization.arrayToDataTable([
-            ['created', 'temp (F)'],
-            {% for entry in hour_3 | reverse %}
-            ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
-            {% endfor %}
-          ]);
-          var options = {
-          };
-          var chart = new google.visualization.AreaChart(document.getElementById('chart_3hour'));
-          chart.draw(data, options);
-
-          var data = google.visualization.arrayToDataTable([
-            ['created', 'temp (F)'],
-            {% for entry in objects | reverse %}
-            ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
-            {% endfor %}
-          ]);
-          var options = {
-          };
-          var chart = new google.visualization.AreaChart(document.getElementById('chart_day'));
-          chart.draw(data, options);
-        }
-      </script>
-    </div>
-
-    <div class="span6">
-      <div class="btn-group">
-        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-          Sensors
-          <span class="caret"></span>
-        </a>
-          <ul class="dropdown-menu">
-            {% for sensor in sensors %}
-            <li><a href="{{ url_for('sensor', key=sensor) }}">{{ sensor }}</a></li>
-            {% endfor %}
-          </ul>
-      </div>
- 
-      <h2>Last hour</h2>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <td>Temp (F)</td>
-            <td>Temp (C)</td>
-            <td>Key</td>
-            <td>Created</td>
-          </tr>
-        </thead>
-        <tbody>
-          {% for entry in half %}
-          <tr>
-            <td>{{ entry.as_fahrenheit() }}</td>
-            <td>{{ entry.as_celsus() }}</td>
-            <td><a href="{{ url_for('sensor', key=entry.key) }}">{{ entry.key }}</a></td>
-            <td>{{ entry.timestamp() }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+{% block body_top %}
+<div class="row">
+  <div class="span12">
+    <h1>All sensors</h1>
   </div>
+</div>
+{% endblock body_top %}
 
-  <footer>
-    <p><i class="icon-camera-retro"></i> footer stuff</p>
-  </footer>
+{% block body_main %}
+<div class="row">
+  <div class="span5">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>Currently</td>
+          <td>{{ current }}</td>
+        </tr>
+        <tr>
+          <td>24 hours max</td>
+          <td>{{ max_24 }}</td>
+        </tr>
+        <tr>
+          <td>24 hours min</td>
+          <td>{{ min_24 }}</td>
+        </tr>
+        <tr>
+          <td>Average</td>
+          <td>{{ average }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>30 minutes</h2>
+    <div id="chart_half"></div>
+    <h2>1 hour</h2>
+    <div id="chart_hour"></div>
+    <h2>3 hours</h2>
+    <div id="chart_3hour"></div>
+    <h2>24 hours</h2>
+    <div id="chart_day"></div>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1.0', {'packages':['corechart']});
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['created', 'temp (F)'],
+          {% for entry in half | reverse %}
+          ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
+          {% endfor %}
+        ]);
+        var options = {
+        };
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_half'));
+        chart.draw(data, options);
+
+        var data = google.visualization.arrayToDataTable([
+          ['created', 'temp (F)'],
+          {% for entry in hour | reverse %}
+          ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
+          {% endfor %}
+        ]);
+        var options = {
+        };
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_hour'));
+        chart.draw(data, options);
+
+        var data = google.visualization.arrayToDataTable([
+          ['created', 'temp (F)'],
+          {% for entry in hour_3 | reverse %}
+          ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
+          {% endfor %}
+        ]);
+        var options = {
+        };
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_3hour'));
+        chart.draw(data, options);
+
+        var data = google.visualization.arrayToDataTable([
+          ['created', 'temp (F)'],
+          {% for entry in objects | reverse %}
+          ['{{ entry.timestamp() }}', {{ entry.as_fahrenheit() }}],
+          {% endfor %}
+        ]);
+        var options = {
+        };
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_day'));
+        chart.draw(data, options);
+      }
+    </script>
+  </div>
+  <div class="span5">
+    <h2>Last hour</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Temp (F)</td>
+          <td>Temp (C)</td>
+          <td>Key</td>
+          <td>Created</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in half %}
+        <tr>
+          <td>{{ entry.as_fahrenheit() }}</td>
+          <td>{{ entry.as_celsus() }}</td>
+          <td><a href="{{ url_for('sensor', key=entry.key) }}">{{ entry.key }}</a></td>
+          <td>{{ entry.timestamp() }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
+{% endblock body_main %}
 
-{% endblock %}

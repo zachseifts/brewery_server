@@ -51,7 +51,6 @@ def reverse_filter(s):
 @app.route('/', methods=['GET'])
 def home():
     objects = [obj for obj in Reading.objects().order_by('created__date')[:1440]][::-1]
-    sensors = Reading.objects().distinct('key')
     temps = [o.as_fahrenheit() for o in objects]
     return render_template('homepage.html',
         objects=objects,
@@ -62,25 +61,24 @@ def home():
         average=sum(temps) / float(len(temps)),
         max_24=max(temps),
         min_24=min(temps),
-        sensors=sensors
     )
+
+@app.route('/sensors/', methods=['GET'])
+def sensors():
+    sensors = Reading.objects().distinct('key')
+    return render_template('sensors.html', sensors=sensors)
 
 @app.route('/sersor/<string:key>/', methods=['GET'])
 def sensor(key):
     objects = [obj for obj in Reading.objects(key=key).order_by('created__date')][::-1]
     temps = [o.as_fahrenheit() for o in objects]
-    sensors = Reading.objects().distinct('key')
     return render_template('sensor.html',
         sensor=key,
         objects=objects,
         current=objects[0].as_fahrenheit(),
-        hour=objects[:60],
-        hour_3=objects[:60*3],
-        half=objects[:30],
         average=sum(temps) / float(len(temps)),
         max_24=max(temps),
-        min_24=min(temps),
-        sensors=sensors
+        min_24=min(temps)
     )
 
 @app.route('/favicon.ico')
