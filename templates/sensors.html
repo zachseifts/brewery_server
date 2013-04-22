@@ -1,12 +1,16 @@
 {% extends "layout.html" %}
 
 {% block body_top %}
+<ul class="breadcrumb">
+  <li><a href="{{ url_for('home') }}">Home</a> <span class="divider">/</span></li>
+  <li class="active">Sensors</li>
+</ul>
 <h1>Sensors</h1>
 {% endblock body_top %}
 
 {% block body_main %}
 <div class="row">
-  <div class="span10">
+  <div class="span12">
     <ul class="">
       {% for sensor in sensors %}
       <li><a href="{{ url_for('sensor', key=sensor) }}">{{ sensor }}</a></li>

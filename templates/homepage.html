@@ -1,16 +1,15 @@
 {% extends "layout.html" %}
 
 {% block body_top %}
-<div class="row">
-  <div class="span12">
-    <h1>All sensors</h1>
-  </div>
-</div>
+<ul class="breadcrumb">
+  <li class="active">Home</li>
+</ul>
+<h1>All sensors</h1>
 {% endblock body_top %}
 
 {% block body_main %}
 <div class="row">
-  <div class="span5">
+  <div class="span7">
     <table class="table">
       <tbody>
         <tr>
@@ -96,17 +95,15 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <td>Temp (F)</td>
-          <td>Temp (C)</td>
-          <td>Key</td>
+          <td>Temp (&deg;F)</td>
+          <td>Sensor</td>
           <td>Created</td>
         </tr>
       </thead>
       <tbody>
         {% for entry in half %}
         <tr>
-          <td>{{ entry.as_fahrenheit() }}</td>
-          <td>{{ entry.as_celsus() }}</td>
+          <td>{{ entry.as_fahrenheit() }} &deg;F</td>
           <td><a href="{{ url_for('sensor', key=entry.key) }}">{{ entry.key }}</a></td>
           <td>{{ entry.timestamp() }}</td>
         </tr>

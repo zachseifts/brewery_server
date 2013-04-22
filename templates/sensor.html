@@ -1,17 +1,17 @@
 {% extends "layout.html" %}
 
 {% block body_top %}
-<div class="row">
-  <div class="span12">
-    <h1>Sensor: {{ sensor }}</h1>
-
-  </div>
-</div>
+<ul class="breadcrumb">
+  <li><a href="{{ url_for('home') }}">Home</a> <span class="divider">/</span></li>
+  <li><a href="{{ url_for('sensors') }}">Sensors</a> <span class="divider">/</span></li>
+  <li class="active">{{ sensor }}</li>
+</ul>
+<h1>Sensor: {{ sensor }}</h1>
 {% endblock body_top %}
 
 {% block body_main %}
 <div class="row">
-  <div class="span10">
+  <div class="span12">
     <div id="chart_day"></div>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -35,7 +35,7 @@
 </div>
 
 <div class="row">
-  <div class="span5">
+  <div class="span4">
     <table class="table">
       <tbody>
         <tr>
@@ -58,20 +58,20 @@
     </table>
   </div>
 
-  <div class="span5">
+  <div class="span8">
     <table class="table table-striped">
       <thead>
         <tr>
-          <td>Temp (F)</td>
-          <td>Temp (C)</td>
+          <td>Temp (&deg;F)</td>
+          <td>Temp (&deg;C)</td>
           <td>Created</td>
         </tr>
       </thead>
       <tbody>
         {% for entry in objects %}
         <tr>
-          <td>{{ entry.as_fahrenheit() }}</td>
-          <td>{{ entry.as_celsus() }}</td>
+          <td>{{ entry.as_fahrenheit() }} &deg;F</td>
+          <td>{{ entry.as_celsus() }} &deg;C</td>
           <td>{{ entry.timestamp() }}</td>
         </tr>
         {% endfor %}
